@@ -24,17 +24,17 @@ home directory (`unlink ~/.vimrc`, `unlink ~/.vim`, and
 
 # Highlights
 - Vim
-- - fugitive
-- - pathogen
-- - ctrl p
-- - highlight whitespace
-- - long undo
-- - swapfiles in a different location
-- - syntax highlighting with syntastic
-- - code folding
-- - sane backspace functionality
-- - 80 line highlighting
-- - tab completion
+ - fugitive
+ - pathogen
+ - ctrl p
+ - highlight whitespace
+ - long undo
+ - swapfiles in a different location
+ - syntax highlighting with syntastic
+ - code folding
+ - sane backspace functionality
+ - 80 line highlighting
+ - tab completion
 
 - Git
-- - those fantastic `lg` commands that show git timelines
+ - those fantastic `lg` commands that show git timelines
