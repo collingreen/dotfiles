@@ -18,7 +18,6 @@ home directory (`unlink ~/.vimrc`, `unlink ~/.vim`, and
 
 # Installation
 - Go take my name and email out of the gitconfig
-- `git submodule update --init --recursive`
 - `python install.py`
 
 
