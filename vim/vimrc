@@ -45,9 +45,14 @@ au FileType javascript set tabstop=2
 au FileType javascript set shiftwidth=2
 au FileType javascript set expandtab
 
+au FileType jade set tabstop=2
+au FileType jade set shiftwidth=2
+au FileType jade set expandtab
+
 au FileType markdown set tw=80
 au FileType markdown set formatoptions+=t
 au FileType markdown set wm=2
+
 
 let g:vim_json_syntax_conceal = 0
 
