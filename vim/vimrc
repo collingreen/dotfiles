@@ -52,6 +52,9 @@ au FileType markdown set tw=80
 au FileType markdown set formatoptions+=t
 au FileType markdown set wm=2
 
+au FileType stylus set tabstop=2
+au FileType stylus set shiftwidth=2
+au FileType stylus set expandtab
 
 let g:vim_json_syntax_conceal = 0
 
