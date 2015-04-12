@@ -1,0 +1,21 @@
+export PATH=$PATH:~/bin
+
+
+alias ls="ls -Gh"
+alias ll="ls -lahG"
+
+_find() {
+    find . -iname "*$1*"
+}
+
+_findfile() {
+    find . -type f -iname "*$1*"
+}
+
+_finddir() {
+    find . -type d -iname "*$1*"
+}
+
+alias f=_find
+alias ff=_findfile
+alias fd=_finddir

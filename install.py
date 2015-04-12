@@ -1,8 +1,20 @@
 #!/usr/bin/python
 
-import os, subprocess
+import os, subprocess, logging
+
+# logging.basicConfig(level=logging.DEBUG)
 
 HERE = os.path.abspath(os.path.dirname(__file__))
+PROFILE_HEADER = """
+#### START AUTOMATICALLY GENERATED PROFILE CODE ####
+"""
+PROFILE_FOOTER = """
+#### END AUTOMATICALLY GENERATED PROFILE CODE ####"""
+PROFILE_CONTENT = """
+# Do not edit anything inside this block. Your changes will be lost.
+source .custom_profile
+"""
+
 
 def link_to_home_dir(path, link_name):
     try:
@@ -32,8 +44,48 @@ def install_vim():
         ("vim/vim", ".vim")
     ])
 
+def install_profile():
+    logging.info("Adding custom profile link to .profile")
+    link_to_home_dir("custom_profile", ".custom_profile")
+
+    # update .profile to source .custom_profile
+    profile_path = os.path.join(os.path.expanduser('~'), '.profile')
+    _update_profile(profile_path)
+
+def _update_profile(profile_path):
+
+    content = ''
+    if os.path.exists(profile_path):
+        with open(profile_path, 'r') as f:
+            content = f.read()
+
+        # look for profile header and footer
+        header_index = content.find(PROFILE_HEADER)
+        footer_index = content.find(PROFILE_FOOTER)
+
+        if header_index > -1 and footer_index > -1:
+            logging.debug("Found existing header and footer")
+            # rewrite internal section
+            content = content[:header_index] + \
+                PROFILE_HEADER + PROFILE_CONTENT + PROFILE_FOOTER + \
+                content[footer_index + len(PROFILE_FOOTER):]
+        elif header_index == -1 and footer_index == -1:
+            logging.debug("Could not find header or footer")
+            # add section to the end
+            content = content + \
+                    PROFILE_HEADER + PROFILE_CONTENT + PROFILE_FOOTER
+        else:
+            logging.warn("Failed to parse profile header and footer correctly")
+    else:
+        logging.debug(".profile not found - creating it")
+        content = PROFILE_HEADER + PROFILE_CONTENT + PROFILE_FOOTER
+
+    with open(profile_path, 'w') as f:
+        f.write(content)
+
 
 if __name__ == "__main__":
     update_submodules()
     install_git()
     install_vim()
+    install_profile()
