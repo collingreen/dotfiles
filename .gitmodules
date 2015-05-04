@@ -22,3 +22,18 @@
 [submodule "vim/vim/bundle/vim-json"]
 	path = vim/vim/bundle/vim-json
 	url = https://github.com/elzr/vim-json.git
+[submodule "vim/vim/bundle/vim-commentary"]
+	path = vim/vim/bundle/vim-commentary
+	url = https://github.com/tpope/vim-commentary
+[submodule "vim/vim/bundle/vim-surround"]
+	path = vim/vim/bundle/vim-surround
+	url = https://github.com/tpope/vim-surround
+[submodule "vim/vim/bundle/vim-repeat"]
+	path = vim/vim/bundle/vim-repeat
+	url = https://github.com/tpope/vim-repeat
+[submodule "vim/vim/bundle/vim-jade"]
+	path = vim/vim/bundle/vim-jade
+	url = git://github.com/digitaltoad/vim-jade.git
+[submodule "vim/vim/bundle/vim-stylus"]
+	path = vim/vim/bundle/vim-stylus
+	url = git://github.com/wavded/vim-stylus.git
