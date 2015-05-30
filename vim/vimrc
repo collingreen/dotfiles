@@ -156,6 +156,10 @@ autocmd BufNew,BufEnter * call matchadd('OverLength', '\%>80v.\+')
 set nocompatible
 set backspace=2
 
+
+" keeps ctrlp in a reasonable working dir after opening
+" 'r' finds git root, 'a' keeps original cwd if opening a child file
+"let g:ctrlp_working_path_mode = 'ra'
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
   " Use Ag over Grep
