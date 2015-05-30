@@ -57,6 +57,9 @@ au FileType stylus set tabstop=2
 au FileType stylus set shiftwidth=2
 au FileType stylus set expandtab
 
+au FileType json set tabstop=2
+au FileType json set shiftwidth=2
+au FileType json set expandtab
 let g:vim_json_syntax_conceal = 0
 
 autocmd BufNewFile,BufReadPost *.coffee setl sw=2 ts=2 expandtab
