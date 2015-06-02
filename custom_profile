@@ -1,8 +1,17 @@
 export PATH=$PATH:~/bin
 
+if ls --color 2> /dev/null > /dev/null ; then
+  # GNU ls
+  LS_FLAGS="--color --group-directories-first"
+  LL_FLAGS="-la --color --group-directories-first"
+else
+  # BSD/Mac ls
+  LS_FLAGS="-Gh"
+  LL_FLAGS="-laGh"
+fi
 
-alias ls="ls -Gh"
-alias ll="ls -lahG"
+alias ls="ls $LS_FLAGS"
+alias ll="ls $LL_FLAGS"
 
 _find() {
     find . -iname "*$1*"
