@@ -76,6 +76,8 @@ let g:vim_json_syntax_conceal = 0
 autocmd BufNewFile,BufReadPost *.coffee setl sw=2 ts=2 expandtab
 autocmd BufNewFile,BufReadPost *.html setl sw=2 ts=2 expandtab
 
+au BufNewFile,BufRead *.tag set filetype=html
+
 set showmatch " Show matching brackets
 
 " highlight searches
