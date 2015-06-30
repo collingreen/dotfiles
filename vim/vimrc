@@ -202,7 +202,7 @@ function! ToggleErrors()
     endif
 endfunction
 " bring up syntastic error list
-nnoremap <silent> <F3> :<C-e>call ToggleErrors()<CR>
+nnoremap <silent> <Leader>e :<C-u>call ToggleErrors()<CR>
 
 " Clear search highlights
 nnoremap <silent> <Space> :let @/ = ""<CR>
