@@ -223,3 +223,31 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-h> <C-w>h
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" U is never what you actually want
+nnoremap U :call ShowCapslockWarning()<cr>
+nnoremap u :call ClearCapslockWarning()<cr>
+
+function ClearCapslockWarning()
+    let g:caps_lock_warning = 1
+    u
+endfunction
+
+" 1 indexed for simple printing
+let g:caps_lock_warning = 1
+function ShowCapslockWarning()
+    if g:caps_lock_warning == 0
+        echo " ~~ WARNING: CAPSLOCK IS ON ~~ "
+    elseif g:caps_lock_warning < 5
+        echo " ~~ WARNING: CAPSLOCK IS ON ~~ You have now tried " . g:caps_lock_warning . " times."
+    elseif g:caps_lock_warning < 10
+        echo " ~~ HEY - SERIOUSLY - CAPSLOCK IS ON ~~ You have now tried " . g:caps_lock_warning . " times."
+    elseif g:caps_lock_warning < 20
+        echo " ~~ You're trying to undo and it won't work because CAPSLOCK IS ON ~~ You have now tried " . g:caps_lock_warning . " times."
+    elseif g:caps_lock_warning < 50
+        echo " ~~ OMG THERE IS NO HELPING YOU ~~ You have now tried " . g:caps_lock_warning . " times."
+    else
+        let g:caps_lock_warning = 0
+    endif
+    let g:caps_lock_warning = g:caps_lock_warning + 1
+endfunction
