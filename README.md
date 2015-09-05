@@ -37,3 +37,12 @@ home directory (`unlink ~/.vimrc`, `unlink ~/.vim`, and
 
 - Git
  - those fantastic `lg` commands that show git timelines
+
+
+# Other Settings
+ npm install -g standard
+ - https://github.com/feross/standard
+ npm install -g github-todos
+ - https://www.npmjs.com/package/github-todos
+ gem install overcommit
+- https://github.com/brigade/overcommit

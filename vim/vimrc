@@ -186,8 +186,10 @@ if executable('ag')
 endif
 
 " syntastic
-let g:syntastic_javascript_checkers = ['jshint']
-let g:syntastic_javascript_jshint_conf = $HOME . '/.jshintrc'
+" let g:syntastic_javascript_checkers = ['jshint']
+" let g:syntastic_javascript_jshint_conf = $HOME . '/.jshintrc'
+let g:syntastic_javascript_checkers = ['standard']
+let g:syntastic_python_checkers = ['flake8']
 
 " Custom status line. Matches `ruler` and adds fugitive#statusline()
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
