@@ -43,3 +43,9 @@
 [submodule "vim/vim/bundle/vim-less"]
 	path = vim/vim/bundle/vim-less
 	url = https://github.com/groenewege/vim-less
+[submodule "vim/vim/bundle/gundo"]
+	path = vim/vim/bundle/gundo
+	url = http://github.com/sjl/gundo.vim.git
+[submodule "vim/vim/bundle/ag"]
+	path = vim/vim/bundle/ag
+	url = https://github.com/rking/ag.vim

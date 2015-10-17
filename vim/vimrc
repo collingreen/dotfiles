@@ -1,32 +1,59 @@
+" Summary {{{
+" ii -> leave insert mode (dvorak friendly, qwerty probably wants jj or jk)
+" leader is space
+"   leader d,y -> clipboard copy, leader p -> clipboard paste
+"   leader e -> syntastic error window
+"   leader u -> gundo undo tree visualizer
+"   leader a -> ag
+"   leader s -> save sessions
+" space space -> clear search
+" syntastic
+"   js -> standard, python -> flake8
+" }}}
+
+" Pathogen {{{
 " Use pathogen
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
 Helptags
+" }}}
 
+" Color {{{
 " Color scheme
 syntax enable
 set background=dark
 colorscheme desert
 
-" shortcuts to leave insert mode
-" qwerty users beware...
-inoremap ii <Esc>
+" Set 256 color mode
+" set t_Co=256
+" let base16colorspace=256
+" }}}
 
+" Swap / Backup {{{
 " Change .swp file location
 set backupdir=~/.vim/backup//
 set directory=~/.vim/swap//
+" }}}
 
-" Undo buffer awesomeness
-set undofile
-set undodir=$HOME/.vim/undo
-set undolevels=1000
-set undoreload=10000
+" Custom Movement {{{
 
-" Line numbers
-set number
+" B and E go to start and end of line (instead of beginning/end of WORD)
+nnoremap B ^
+nnoremap E $
+" }}}
 
-" Leader as space?
+" Keybindings {{{
+" Leader as space
 let mapleader = "\<space>"
+
+" ii to leave insert mode - qwerty users beware; dvorak for life
+inoremap ii <Esc>
+
+" save session
+nnoremap <leader>s :mksession<CR>
+
+" highlight last inserted text
+nnoremap gV `[v`]
 
 " leader copy and paste to system clipboard
 vmap <Leader>y "+y
@@ -35,196 +62,56 @@ nmap <Leader>p "+p
 nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
+" }}}
 
-" Indentation
-filetype plugin indent on
-set ai " Autoident
-set cindent
-
-set tabstop=4
-set shiftwidth=4
-set smarttab
-set expandtab
-
-au FileType python set tabstop=4
-au FileType python set shiftwidth=4
-
-autocmd BufNewFile,BufReadPost *.yml setl ts=2 sw=2 expandtab
-autocmd BufNewFile,BufReadPost *.yaml setl ts=2 sw=2 expandtab
-
-au FileType javascript set tabstop=2
-au FileType javascript set shiftwidth=2
-au FileType javascript set expandtab
-
-au FileType jade set tabstop=2
-au FileType jade set shiftwidth=2
-au FileType jade set expandtab
-
-au FileType markdown set tw=80
-au FileType markdown set formatoptions+=t
-au FileType markdown set wm=2
-
-au FileType stylus set tabstop=2
-au FileType stylus set shiftwidth=2
-au FileType stylus set expandtab
-
-au FileType json set tabstop=2
-au FileType json set shiftwidth=2
-au FileType json set expandtab
-let g:vim_json_syntax_conceal = 0
-
-autocmd BufNewFile,BufReadPost *.coffee setl sw=2 ts=2 expandtab
-autocmd BufNewFile,BufReadPost *.html setl sw=2 ts=2 expandtab foldmethod=manual
-
-au BufNewFile,BufRead *.tag set filetype=html
-
-set showmatch " Show matching brackets
-
-" highlight searches
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
-
-" Set 256 color mode
-" set t_Co=256
-" let base16colorspace=256
-
-"Use TAB to complete when typing words, else inserts TABs as usual.
-"Uses dictionary and source files to find matching words to complete.
-
-"See help completion for source,
-"Note: usual completion is on <C-n> but more trouble to press all the time.
-"Never type the same word twice and maybe learn a new spellings!
-"Use the Linux dictionary when spelling is in doubt.
-"Window users can copy the file to their machine.
-function! Tab_Or_Complete()
-  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-    return "\<C-N>"
-  else
-    return "\<Tab>"
-  endif
-endfunction
-:inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
-:set dictionary="/usr/dict/words"
-
-
-" :noremap <C-T> :tnext<CR>
-
-" load tags file if found
-set tags=./tags;/
-set tags+=~/tags
-
-" show column number, etc. on bottom right
-set ruler
-set nowrap
-
-" disable JSDoc comment highlighting in javascript
-let javascript_ignore_javaScriptdoc=1
-
-""""""""""""""""""""""""""
-"       plugins          "
-""""""""""""""""""""""""""
-
-" vim-markdown
-let g:vim_markdown_folding_disabled=1
-
-
-" Tell vim to remember certain things when we exit
-"  '10  :  marks will be remembered for up to 10 previously edited files
-"  "100 :  will save up to 100 lines for each register
-"  :20  :  up to 20 lines of command-line history will be remembered
-"  %    :  saves and restores the buffer list
-"  n... :  where to save the viminfo files
-" set viminfo='10,\"100,:20,%,n~/.viminfo
-set viminfo='10,\"100,:20,%,n~/.viminfo
-
-" Cursor restoring stuff
-function! ResCur()
-  if line("'\"") <= line("$")
-    normal! g`"
-    return 1
-  endif
-endfunction
-
-augroup resCur
-  autocmd!
-  autocmd BufWinEnter * call ResCur()
-augroup END
-
-" Code Folding
-set foldmethod=indent
-set foldnestmax=10
-set nofoldenable
-set foldlevel=1
-
-" Coffeescript folding -- why is this necessary?
-autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent
-
+" General Config {{{
 " Enable mouse scroll
 set mouse=a
-
-" Highlight things over 80 columns - run in autocmds so ctrl.p doesnt break
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-autocmd BufNew,BufEnter * call matchadd('OverLength', '\%>80v.\+')
 
 " Fix backspaces in vim 7.4 on mac
 set nocompatible
 set backspace=2
 
+" modelines - read the last line
+set modelines=1
+" }}}
 
-" keeps ctrlp in a reasonable working dir after opening
-" 'r' finds git root, 'a' keeps original cwd if opening a child file
-let g:ctrlp_working_path_mode = 'ra'
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-if executable('ag')
-  " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
+" UI {{{
 
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
-
-" syntastic
-" let g:syntastic_javascript_checkers = ['jshint']
-" let g:syntastic_javascript_jshint_conf = $HOME . '/.jshintrc'
-let g:syntastic_javascript_checkers = ['standard']
-let g:syntastic_python_checkers = ['flake8']
-
-" Custom status line. Matches `ruler` and adds fugitive#statusline()
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
-
-" syntastic error window toggle
-function! ToggleErrors()
-    let old_last_winnr = winnr('$')
-    lclose
-    if old_last_winnr == winnr('$')
-    " Nothing was closed, open syntastic error location
-        Errors
-    endif
-endfunction
-" bring up syntastic error list
-nnoremap <silent> <Leader>e :<C-u>call ToggleErrors()<CR>
-
-" Clear search highlights
-nnoremap <silent> <Space> :let @/ = ""<CR>
+set showmatch " Show matching brackets
+set number " Line Numbers
+set wildmenu " visual autocomplete in commands
+set lazyredraw " only redraw when necessary
+set ruler " show column number, etc. on bottom right
+set nowrap " dont wrap lines
 
 " Change listchars to something sensible
 " set list listchars=tab:»·,trail:·
 set list listchars=tab:»\ ,trail:·,nbsp:.
 
-" Java
-let g:syntastic_java_javac_config_file_enabled=1
+" Custom status line. Matches `ruler` and adds fugitive#statusline()
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
-" Open new split panes to right and bottom, which feels more natural
-set splitbelow
-set splitright
+" highlight current line - so ugly, but helps when using lots of windows
+set cursorline
 
-" Quick window movement
-nnoremap <C-j> <C-w>j
-nnoremap <C-h> <C-w>h
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+" Highlight things over 80 columns - run in autocmds so ctrl.p doesnt break
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+autocmd BufNew,BufEnter * call matchadd('OverLength', '\%>80v.\+')
+
+:set colorcolumn=+1     " highlight columns after 'textwidth'
+:highlight ColorColumn ctermbg=red guibg=#202020
+" }}}
+
+" Undo {{{
+" Undo buffer awesomeness
+set undofile
+set undodir=$HOME/.vim/undo
+set undolevels=1000
+set undoreload=10000
+
+" toggle gundo
+nnoremap <leader>u :GundoToggle<CR>
 
 " U is never what you actually want
 nnoremap U :call ShowCapslockWarning()<cr>
@@ -253,3 +140,220 @@ function ShowCapslockWarning()
     endif
     let g:caps_lock_warning = g:caps_lock_warning + 1
 endfunction
+" }}}
+
+" Filetypes and Indentation {{{
+
+" Indentation
+filetype plugin indent on
+set ai " Autoindent
+
+" defaults
+set tabstop=4
+set shiftwidth=4
+set smarttab
+set expandtab
+
+augroup configgroup
+    autocmd!
+
+    " Python {{{
+    au FileType python set sw=4 ts=4
+    autocmd FileType python setlocal commentstring=#\ %s
+    " }}}
+
+    " Javascript {{{
+    au FileType javascript set sw=2 ts=2 expandtab
+    " }}}
+
+    " HTML {{{
+    autocmd BufNewFile,BufReadPost *.html setl sw=2 ts=2 expandtab
+    " }}}
+
+    " Riot.js {{{
+    au BufNewFile,BufRead *.tag set filetype=html
+    au BufNewFile,BufRead *.store set filetype=javascript
+    " }}}
+
+    " JSON {{{
+    au FileType json set sw=2 ts=2 expandtab
+    let g:vim_json_syntax_conceal = 0
+    " }}}
+
+    " YAML {{{
+    autocmd BufNewFile,BufReadPost *.yml setl ts=2 sw=2 expandtab
+    autocmd BufNewFile,BufReadPost *.yaml setl ts=2 sw=2 expandtab
+    " }}}
+
+    " Jade {{{
+    au FileType jade set sw=2 ts=2 expandtab
+    " }}}
+
+    " Stylus {{{
+    au FileType stylus set sw=2 ts=2 expandtab
+    " }}}
+
+    " Markdown {{{
+    au FileType markdown set tw=80
+    au FileType markdown set formatoptions+=t
+    " }}}
+
+    " Makefile {{{
+    autocmd BufEnter Makefile setlocal noexpandtab
+    " }}}
+    " Coffeescript {{{
+    autocmd BufNewFile,BufReadPost *.coffee setl sw=2 ts=2 expandtab
+    " }}}
+
+    " Java {{{
+    autocmd FileType java setlocal noexpandtab
+    autocmd FileType java setlocal list
+    autocmd FileType java setlocal listchars=tab:+\ ,eol:-
+    autocmd FileType java setlocal formatprg=par\ -w80\ -T4
+    autocmd BufEnter *.cls setlocal filetype=java
+    let g:syntastic_java_javac_config_file_enabled=1
+    " }}}
+
+    " PHP {{{
+    autocmd FileType php setlocal expandtab
+    autocmd FileType php setlocal list
+    autocmd FileType php setlocal listchars=tab:+\ ,eol:-
+    autocmd FileType php setlocal formatprg=par\ -w80\ -T4
+    " }}}
+
+    " Ruby {{{
+    autocmd FileType ruby setlocal tabstop=2
+    autocmd FileType ruby setlocal shiftwidth=2
+    autocmd FileType ruby setlocal softtabstop=2
+    autocmd FileType ruby setlocal commentstring=#\ %s
+    " }}}
+
+    " sh {{{
+    autocmd BufEnter *.sh setlocal tabstop=2
+    autocmd BufEnter *.sh setlocal shiftwidth=2
+    autocmd BufEnter *.sh setlocal softtabstop=2
+    " }}}
+augroup END
+" }}}
+
+" Search {{{
+set hlsearch " highlight searches
+set incsearch " search as characters are entered
+set ignorecase " case-insensitive search
+set smartcase " smart casing - if you use uppercase it will match
+
+" Clear search highlights
+nnoremap <silent> <Space> :let @/ = ""<CR>
+" }}}
+
+" Tab Complete {{{
+"Use TAB to complete when typing words, else inserts TABs as usual.
+"Uses dictionary and source files to find matching words to complete.
+
+"See help completion for source,
+"Note: usual completion is on <C-n> but more trouble to press all the time.
+"Never type the same word twice and maybe learn a new spellings!
+"Use the Linux dictionary when spelling is in doubt.
+"Window users can copy the file to their machine.
+function! Tab_Or_Complete()
+  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+    return "\<C-N>"
+  else
+    return "\<Tab>"
+  endif
+endfunction
+:inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
+:set dictionary="/usr/dict/words"
+" }}}
+
+" Plugins {{{
+" disable JSDoc comment highlighting in javascript
+let javascript_ignore_javaScriptdoc=1
+
+" vim-markdown
+let g:vim_markdown_folding_disabled=1
+
+" open ag.vim
+nnoremap <leader>a :Ag
+" }}}
+
+" Saving/Restoring {{{
+" Tell vim to remember certain things when we exit
+"  '10  :  marks will be remembered for up to 10 previously edited files
+"  "100 :  will save up to 100 lines for each register
+"  :20  :  up to 20 lines of command-line history will be remembered
+"  %    :  saves and restores the buffer list
+"  n... :  where to save the viminfo files
+" set viminfo='10,\"100,:20,%,n~/.viminfo
+set viminfo='10,\"100,:20,%,n~/.viminfo
+
+" Cursor restoring stuff
+function! ResCur()
+  if line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
+endfunction
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
+" }}}
+
+" Code Folding {{{
+set foldmethod=indent
+set foldenable
+set foldnestmax=10
+set foldlevelstart=10
+" }}}
+
+" CtrlP {{{
+" keeps ctrlp in a reasonable working dir after opening
+" 'r' finds git root, 'a' keeps original cwd if opening a child file
+let g:ctrlp_working_path_mode = 'ra'
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+let g:ctrlp_match_window = 'bottom,order:ttb'
+let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+" }}}
+
+" syntastic {{{
+" let g:syntastic_javascript_checkers = ['jshint']
+" let g:syntastic_javascript_jshint_conf = $HOME . '/.jshintrc'
+let g:syntastic_javascript_checkers = ['standard']
+let g:syntastic_python_checkers = ['flake8']
+
+" syntastic error window toggle
+function! ToggleErrors()
+    let old_last_winnr = winnr('$')
+    lclose
+    if old_last_winnr == winnr('$')
+    " Nothing was closed, open syntastic error location
+        Errors
+    endif
+endfunction
+" bring up syntastic error list
+nnoremap <silent> <Leader>e :<C-u>call ToggleErrors()<CR>
+" }}}
+
+" Windows {{{
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
+
+" Quick window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-h> <C-w>h
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+" }}}
+
+" vim:foldmethod=marker:foldlevel=0
