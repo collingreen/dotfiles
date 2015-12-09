@@ -52,3 +52,9 @@
 [submodule "vim/vim/bundle/vim-gitgutter"]
 	path = vim/vim/bundle/vim-gitgutter
 	url = git://github.com/airblade/vim-gitgutter.git
+[submodule "vim/vim/bundle/vim-sleuth"]
+	path = vim/vim/bundle/vim-sleuth
+	url = git@github.com:tpope/vim-sleuth
+[submodule "vim/vim/bundle/vim-python-pep8-indent"]
+	path = vim/vim/bundle/vim-python-pep8-indent
+	url = git@github.com:hynek/vim-python-pep8-indent
