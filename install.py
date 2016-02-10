@@ -12,7 +12,7 @@ PROFILE_FOOTER = """
 #### END AUTOMATICALLY GENERATED PROFILE CODE ####"""
 PROFILE_CONTENT = """
 # Do not edit anything inside this block. Your changes will be lost.
-source .custom_profile
+source ~/.custom_profile
 """
 
 
