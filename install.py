@@ -44,6 +44,16 @@ def install_vim():
         ("vim/vim", ".vim")
     ])
 
+def install_one_offs():
+    # TODO: this sucks - better way?
+
+    # git diff so fancy - https://github.com/stevemao/diff-so-fancy
+    subprocess.call("npm install -g diff-so-fancy", shell=True)
+    subprocess.call(
+        'git config --global core.pager "diff-so-fancy | less --tabs=1,5 -R"',
+        shell=True
+    )
+
 def install_profile():
     logging.info("Adding custom profile link to .profile")
     link_to_home_dir("custom_profile", ".custom_profile")
