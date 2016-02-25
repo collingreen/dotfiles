@@ -28,3 +28,8 @@ _finddir() {
 alias f=_find
 alias ff=_findfile
 alias fd=_finddir
+
+alias ".."="cd .."
+alias "..."="cd ../.."
+alias "...."="cd ../../.."
+alias "....."="cd ../../../.."
