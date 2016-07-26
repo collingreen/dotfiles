@@ -1,2 +1,3 @@
 vim/vim/undo
 vim/vim/swap
+*.pyc
