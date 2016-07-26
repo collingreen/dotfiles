@@ -54,6 +54,9 @@ def install_one_offs():
         shell=True
     )
 
+    # httpie
+    subprocess.call('pip install httpie', shell=True)
+
 def install_profile():
     logging.info("Adding custom profile link to .profile")
     link_to_home_dir("custom_profile", ".custom_profile")
