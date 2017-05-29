@@ -170,6 +170,10 @@ augroup configgroup
     autocmd BufNewFile,BufReadPost *.html setl sw=2 ts=2 expandtab
     " }}}
 
+    " GoogleScript {{{
+    au BufNewFile,BufRead *.gs set filetype=javascript
+    " }}}
+
     " Riot.js {{{
     au BufNewFile,BufRead *.tag set filetype=html
     au BufNewFile,BufRead *.store set filetype=javascript
