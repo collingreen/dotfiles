@@ -11,6 +11,11 @@
 	lg = !"git lg1"
 	cleanup = !"git branch --merged | grep -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"
 	stache = "!git -c commit.gpgsign=false stash"
+	recent = !"git for-each-ref --count=10 --sort=-committerdate refs/heads/ --format=\"%(refname:short)\""
+	overview = !"git log --all --oneline --no-merges --since='2 weeks'"
+	recap = !"git log --all --oneline --no-merges --author=collin@collingreen.com"
+	today = !"git log --since=00:00:00 --all --no-merges --oneline --author=collin@collingreen.com"
+	graph = !"git log --graph --all --decorate --stat --date=iso"
 [push]
 	default = matching
 [pager]
