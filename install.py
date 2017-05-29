@@ -97,8 +97,13 @@ def _update_profile(profile_path):
         f.write(content)
 
 
+def install_misc():
+    subprocess.call("brew install gpg-agent", shell=True)
+
+
 if __name__ == "__main__":
     update_submodules()
     install_git()
     install_vim()
+    install_misc()
     install_profile()
