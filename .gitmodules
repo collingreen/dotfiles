@@ -58,3 +58,6 @@
 [submodule "vim/vim/bundle/vim-python-pep8-indent"]
 	path = vim/vim/bundle/vim-python-pep8-indent
 	url = https://github.com/hynek/vim-python-pep8-indent
+[submodule "vim/vim/bundle/vim-jsx"]
+	path = vim/vim/bundle/vim-jsx
+	url = https://github.com/mxw/vim-jsx.git
