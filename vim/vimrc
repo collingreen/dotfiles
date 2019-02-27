@@ -360,4 +360,19 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 " }}}
 
+" Scripts {{{
+function! SplitLineNicely()
+    " Save previous value of last search register
+    let saved_last_search_pattern = @/
+
+    " :substitute replaces the content of the register with the `\s\+`
+    " pattern highlighting all whitespaces in the file
+    substitute /\s\+/\r/g
+
+    " Restore previous search register
+    let @/ = saved_last_search_pattern
+endfunction
+vnoremap <silent> <Leader>j :call SplitLineNicely()<CR>
+" }}}
+
 " vim:foldmethod=marker:foldlevel=0
