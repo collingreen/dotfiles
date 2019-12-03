@@ -101,6 +101,7 @@ def install_misc():
     subprocess.call("brew install gpg-agent", shell=True)
     subprocess.call("brew install ag", shell=True)
     subprocess.call("brew install diff-so-fancy", shell=True)
+    subprocess.call("brew install tree", shell=True)
 
 
 if __name__ == "__main__":
