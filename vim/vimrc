@@ -178,6 +178,11 @@ augroup configgroup
     au BufNewFile,BufRead *.tag set filetype=html
     au BufNewFile,BufRead *.store set filetype=javascript
     " }}}
+    "
+    " Typescript {{{
+    au BufNewFile,BufRead *.ts set filetype=javascript
+    au BufNewFile,BufRead *.tsx set filetype=javascript
+    " }}}
 
     " JSON {{{
     au FileType json set sw=2 ts=2 expandtab
