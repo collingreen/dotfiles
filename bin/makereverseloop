@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+"""
+install ffmpeg yourself (on mac you can `brew install ffmpeg` if you have brew...)
+"""
+
+import os
+import subprocess
+import sys
+
+
+def usage():
+  print("Usage: {} <video>".format(sys.argv[0]))
+
+
+def run(command):
+  print(command)
+  subprocess.run(command, shell=True)
+
+
+def convert(mp4path, outpath):
+  # reverse the video
+  reversedPath = "{}-reversed{}".format(os.path.splitext(mp4path)[0], os.path.splitext(mp4path)[1])
+  command = "ffmpeg -i {} -vf reverse {}".format(mp4path, reversedPath)
+  run(command)
+
+  # write a file -- todo: tempfile
+  textFilePath = "{}.txt".format(os.path.splitext(mp4path)[0])
+  with open(textFilePath, 'w') as f:
+    f.writelines([
+      "file '{}'\n".format(mp4path),
+      "file '{}'".format(reversedPath),
+    ])
+
+  # combine them
+  command = "ffmpeg -f concat -safe 0 -i {} -c copy {}".format(textFilePath, outpath)
+  run(command)
+
+  print("Saved video to {}".format(outpath))
+
+if __name__ == '__main__':
+  if len(sys.argv) < 2:
+    usage()
+    sys.exit(1)
+  mp4path = sys.argv[1] if len(sys.argv) < 3 else sys.argv[2]
+  outpath = "{}-reverse-looped.mp4".format(os.path.splitext(mp4path)[0])
+  convert(sys.argv[1], outpath)
+

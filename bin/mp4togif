@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+
+import os
+import subprocess
+import sys
+
+
+def usage():
+  print("Usage: {} <mp4-to-convert>".format(sys.argv[0]))
+
+
+def convert(mp4path, outpath):
+  command = 'ffmpeg -i {} -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 {}'.format(mp4path, outpath)
+  print(command)
+  subprocess.run(
+    command,
+    shell=True,
+    #capture_output=True
+  )
+  print("Saved gif to {}".format(outpath))
+
+if __name__ == '__main__':
+  if len(sys.argv) < 2:
+    usage()
+    sys.exit(1)
+  mp4path = sys.argv[1] if len(sys.argv) < 3 else sys.argv[2]
+  outpath = "{}-converted.gif".format(os.path.splitext(mp4path)[0])
+  convert(sys.argv[1], outpath)
+

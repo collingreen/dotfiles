@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+
+import os
+import subprocess
+import sys
+from optparse import OptionParser
+
+
+USAGE = "Usage: %prog [options] mp4-to-convert"
+
+
+def convert(gifpath, outpath, scale):
+  command = 'ffmpeg -i {} -vf "fps=10,scale={}:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 {}'.format(
+    gifpath, scale, outpath)
+  print(command)
+  subprocess.run(
+    command,
+    shell=True,
+  )
+  print("Saved gif to {}".format(outpath))
+
+if __name__ == '__main__':
+
+  parser = OptionParser(USAGE)
+  parser.add_option(
+    "-s", "--scale",
+    action="store", dest="scale", default=320,
+    help="'scale' passed to ffmpeg - higher means higher resolution [default: %default]"
+  )
+
+  (options, args) = parser.parse_args()
+  if len(args) != 1:
+    parser.error("path to gif is required")
+
+  else:
+    gifpath = args[0]
+    outpath = "{}-converted.mp4".format(os.path.splitext(gifpath)[0])
+    scale = options.scale
+    convert(gifpath, outpath, scale)
+
