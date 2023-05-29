@@ -101,16 +101,25 @@ def _update_profile(profile_path):
         f.write(content)
 
 
-def install_misc():
+def install_misc_osx():
     subprocess.call("brew install gpg-agent", shell=True)
     subprocess.call("brew install ag", shell=True)
     subprocess.call("brew install diff-so-fancy", shell=True)
     subprocess.call("brew install tree", shell=True)
 
+def install_misc_linux():
+    subprocess.call("sudo apt-get update")
+    subprocess.call("sudo apt-get install ripgrep")
+    subprocess.call("sudo apt-get install tree")
+    subprocess.call("sudo apt-get install zsh")
+    subprocess.call('sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)')
 
 if __name__ == "__main__":
     update_submodules()
     install_git()
     install_vim()
-    install_misc()
+    if os.name == 'darwin':
+        install_misc_osx()
+    elif os.name == 'posix':
+        install_misc_linux()
     install_profile()
