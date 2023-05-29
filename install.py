@@ -1,5 +1,9 @@
 #!/usr/bin/python3
 
+# TODO: replace with simple shell script
+# TODO: idempotent install
+# TODO: handle different linux flavors
+
 import os, subprocess, logging
 
 # logging.basicConfig(level=logging.DEBUG)
